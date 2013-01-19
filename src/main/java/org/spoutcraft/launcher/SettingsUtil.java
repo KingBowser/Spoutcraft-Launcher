@@ -101,22 +101,22 @@ public class SettingsUtil {
     setProperty("memory", value);
   }
 
-  private static void setProperty(String s, Object value) {
+  public static void setProperty(String s, Object value) {
     if (settings.checkProperty(s))
       settings.changeProperty(s, value);
     else
       settings.put(s, value);
   }
 
-  private static boolean isProperty(String s) {
+  public static boolean isProperty(String s) {
     return isProperty(s, false);
   }
 
-  private static boolean hasProperty(String name) {
+  public static boolean hasProperty(String name) {
     return settings.checkProperty(name);
   }
 
-  private static boolean isProperty(String s, boolean def) {
+  public static boolean isProperty(String s, boolean def) {
     if (settings.checkProperty(s)) {
       return settings.getPropertyBoolean(s);
     }
@@ -124,7 +124,7 @@ public class SettingsUtil {
     return def;
   }
 
-  private static int getProperty(String s, int def) {
+  public static int getProperty(String s, int def) {
     if (settings.checkProperty(s)) {
       return settings.getPropertyInteger(s);
     }
@@ -132,7 +132,7 @@ public class SettingsUtil {
     return def;
   }
 
-  private static String getProperty(String s, String def) {
+  public static String getProperty(String s, String def) {
     if (settings.checkProperty(s)) {
       return settings.getPropertyString(s);
     }

@@ -45,7 +45,7 @@ public class DownloadUtils {
         }
       } else {
         String fileMD5 = MD5Utils.getMD5(download.getOutFile());
-        if (md5 == null || fileMD5.equals(md5)) {
+        if (md5 == null || fileMD5.equals(md5) || SettingsUtil.isProperty("bowser.imd5", true)) {
           if (!areFilesIdentical) {
             GameUpdater.copy(tempfile, outputFile);
           }

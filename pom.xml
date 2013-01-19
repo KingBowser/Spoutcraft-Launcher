@@ -135,7 +135,7 @@
 					<source>${minimumJreVersion}</source>
 					<target>${minimumJreVersion}</target>
 					<compilerArgument>-Xlint:path</compilerArgument>
-					<otimization>true</otimization>
+					<!--<optimization>true</optimization>-->
 					<showDeprecation>true</showDeprecation>
 					<showWarnings>true</showWarnings>
 				</configuration>

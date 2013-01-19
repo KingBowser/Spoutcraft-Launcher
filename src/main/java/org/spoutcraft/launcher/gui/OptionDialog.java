@@ -63,6 +63,8 @@ public class OptionDialog extends JDialog implements ActionListener {
   // JCheckBox("Allow access to your clipboard");
   JCheckBox                  backupCheckbox     = new JCheckBox("Include worlds when doing automated backup");
   JCheckBox                  retryLoginCheckbox = new JCheckBox("Retry after connection timeout");
+  //Added by KingBowser
+  JCheckBox                  ignoreIncongruous  = new JCheckBox("Ignore Incongruous MD5 Sums");
   JComboBox                  memoryCombo        = new JComboBox();
   JButton                    clearCache         = new JButton("Clear Cache");
   JLabel                     buildInfo          = new JLabel();
@@ -97,6 +99,9 @@ public class OptionDialog extends JDialog implements ActionListener {
     recBuilds.setToolTipText("Recommended builds are (nearly) bug-free and well-tested.");
     // clipboardCheckbox.setToolTipText("Allows server mods to see the contents of your clipboard.");
     backupCheckbox.setToolTipText("Backs up your Single Player worlds after each Modpack update");
+
+    ignoreIncongruous.setToolTipText("Continue processing a file even if it is found to have an unsatisfactory MD5 sum. <br /> WARNING: Corrupt files will be proccessed.");
+
     retryLoginCheckbox.setToolTipText("Retries logging into minecraft.net up to 3 times after a failure");
     clearCache.setToolTipText("Clears the cached minecraft and Modpack files, forcing a redownload on your next login");
     memoryCombo.setToolTipText("Allows you to adjust the memory assigned to Minecraft. Assigning more memory than you have may cause crashes.");
@@ -144,6 +149,7 @@ public class OptionDialog extends JDialog implements ActionListener {
                     .addGroup(gl_contentPanel.createSequentialGroup())
                     // .addComponent(clipboardCheckbox)
                     .addComponent(backupCheckbox)
+                    .addComponent(ignoreIncongruous)
                     .addComponent(retryLoginCheckbox)
                     .addComponent(clearCache)
                     .addComponent(buildInfo)
@@ -156,6 +162,7 @@ public class OptionDialog extends JDialog implements ActionListener {
 
     Font font = new Font("Arial", Font.PLAIN, 11);
     backupCheckbox.setFont(font);
+    ignoreIncongruous.setFont(font);
     // clipboardCheckbox.setFont(font);
     devBuilds.setFont(font);
     recBuilds.setFont(font);
@@ -235,6 +242,7 @@ public class OptionDialog extends JDialog implements ActionListener {
 
     // clipboardCheckbox.setSelected(SettingsUtil.isClipboardAccess());
     backupCheckbox.setSelected(SettingsUtil.isWorldBackup());
+    ignoreIncongruous.setSelected(SettingsUtil.isProperty("bowser.imd5", true));
     retryLoginCheckbox.setSelected(SettingsUtil.getLoginTries() > 1);
 
     int memIndex = Arrays.binarySearch(memValues, SettingsUtil.getMemorySelection() / 512);
@@ -275,6 +283,8 @@ public class OptionDialog extends JDialog implements ActionListener {
       // SettingsUtil.setClipboardAccess(clipboardCheckbox.isSelected());
       SettingsUtil.setWorldBackup(backupCheckbox.isSelected());
       SettingsUtil.setLoginTries(retryLoginCheckbox.isSelected());
+
+      SettingsUtil.setProperty("bowser.imd5", ignoreIncongruous.isSelected()); //Doin it rite
 
       if (SettingsUtil.getMemorySelection() > (memValues[memValues.length - 1] * 512)) {
         SettingsUtil.setMemorySelection(1024);
